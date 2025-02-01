@@ -52,9 +52,7 @@ def book_event(link, username, password):
                 "//div[@class='form-footer']"
                 "//a[contains(@class, 'btn btn-primary') and normalize-space(text())='Book']"
             )
-            book_btn = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, btn_xpath))
-            )
+            book_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, btn_xpath)))
             book_btn.click()
             logging.info("Clicked the 'Book' button successfully!")
             time.sleep(2)
@@ -113,19 +111,18 @@ def schedule_events_from_csv(csv_filename):
             # If booking_open_dt is past, schedule immediately or skip
             if booking_open_dt < datetime.now():
                 logging.info(f"Booking time for {link} is past => scheduling immediate job.")
-                scheduler.add_job(book_event, 'date', run_date=datetime.now(), args=[link])
+                scheduler.add_job(book_event, "date", run_date=datetime.now(), args=[link])
             else:
                 logging.info(f"Scheduling {link} for {booking_open_dt}")
-                scheduler.add_job(book_event, 'date', run_date=booking_open_dt, args=[link])
+                scheduler.add_job(book_event, "date", run_date=booking_open_dt, args=[link])
 
 
 ############################
 # APScheduler Setup
 ############################
-executors = {
-    'default': ThreadPoolExecutor(max_workers=5)
-}
+executors = {"default": ThreadPoolExecutor(max_workers=5)}
 scheduler = BackgroundScheduler(executors=executors)
+
 
 def main():
     csv_file = "calisthenics_events.csv"

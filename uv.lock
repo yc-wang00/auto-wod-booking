@@ -23,7 +23,7 @@ wheels = [
 ]
 
 [[package]]
-name = "auto-booking"
+name = "auto-wod-booking"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

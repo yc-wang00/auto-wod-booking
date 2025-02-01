@@ -38,6 +38,7 @@ logging.basicConfig(format="[%(asctime)s] [%(levelname)s] %(message)s", level=lo
 # Helper Functions
 ########################################
 
+
 def login_wodboard(driver, username=USERNAME, password=PASSWORD):
     """Log into WODBoard using USERNAME/PASSWORD from environment."""
     logging.info("Logging into WODBoard...")
@@ -52,9 +53,7 @@ def login_wodboard(driver, username=USERNAME, password=PASSWORD):
     sign_in_button.click()
 
     # Wait until the dashboard link appears (meaning we've logged in)
-    WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "a[href='/dashboard']"))
-    )
+    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "a[href='/dashboard']")))
     logging.info("Login successful.")
 
 
@@ -72,9 +71,7 @@ def go_to_calendar_423(driver):
 def switch_to_month_view(driver):
     """Click the '.fc-month-button' to ensure FullCalendar is in Month view."""
     logging.info("Switching to Month view...")
-    month_button = WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, ".fc-month-button"))
-    )
+    month_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".fc-month-button")))
     month_button.click()
     time.sleep(2)
 
@@ -82,19 +79,13 @@ def switch_to_month_view(driver):
 def apply_filter_calisthenics(driver):
     """Open the filter dropdown, select 'Calisthenics', click 'Update'."""
     logging.info("Applying Calisthenics filter...")
-    filter_link = WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.ID, "filter-link"))
-    )
+    filter_link = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "filter-link")))
     filter_link.click()
 
-    label_for_calis = driver.find_element(
-        By.CSS_SELECTOR, "label.custom-control-label[for='ct-ClassType4458']"
-    )
+    label_for_calis = driver.find_element(By.CSS_SELECTOR, "label.custom-control-label[for='ct-ClassType4458']")
     label_for_calis.click()
 
-    update_button = driver.find_element(
-        By.CSS_SELECTOR, "input.btn.btn-primary[type='submit'][value='Update']"
-    )
+    update_button = driver.find_element(By.CSS_SELECTOR, "input.btn.btn-primary[type='submit'][value='Update']")
     update_button.click()
 
     logging.info("Filter applied. Waiting for refresh...")
@@ -113,9 +104,7 @@ def find_nonfull_calisthenics_events(driver):
     or you can do partial here & parse date/time in detail page.
     """
     logging.info("Collecting non-full Calisthenics events from the visible calendar...")
-    WebDriverWait(driver, 20).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".wb-event"))
-    )
+    WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".wb-event")))
 
     event_elements = driver.find_elements(By.CSS_SELECTOR, ".wb-event")
     results = []
@@ -169,9 +158,7 @@ def scrape_multiple_months(driver, months_to_scrape=6):
 
         # Move to next month, except after last iteration
         if i < (months_to_scrape - 1):
-            next_btn = WebDriverWait(driver, 20).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, ".fc-next-button"))
-            )
+            next_btn = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".fc-next-button")))
             logging.info(f"Clicking NEXT (month {i+1}/{months_to_scrape})...")
             next_btn.click()
             time.sleep(3)

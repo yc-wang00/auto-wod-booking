@@ -2,11 +2,9 @@
 # ----------
 # A self-contained module for logging into WODBoard and booking an event.
 
-import os
 import time
 import logging
 
-from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,6 +18,7 @@ from crawler import USERNAME, PASSWORD
 ########################################
 # 3) Book function
 ########################################
+
 
 def book_event(link, username, password):
     """
@@ -54,9 +53,7 @@ def book_event(link, username, password):
                 "//div[@class='form-footer']"
                 "//a[contains(@class, 'btn btn-primary') and normalize-space(text())='Book']"
             )
-            book_btn = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, book_btn_xpath))
-            )
+            book_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, book_btn_xpath)))
             book_btn.click()
             logging.info("Clicked the 'Book' button successfully!")
             time.sleep(2)
@@ -78,7 +75,7 @@ def book_event(link, username, password):
 # If you want to test locally, you can do something like:
 if __name__ == "__main__":
     test_link = "https://www.wodboard.com/events/3083038"  # example
-    
+
     success = book_event(test_link, USERNAME, PASSWORD)
     if success:
         logging.info("Booked successfully (or at least found Book button) in test mode.")
