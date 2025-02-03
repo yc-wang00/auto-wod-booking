@@ -34,7 +34,8 @@ def book_event(link, username, password):
 
     # Optionally configure headless mode or other ChromeOptions
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless")  # Uncomment if you want headless
+    options.add_argument("--headless")  # Uncomment if you want headless
+    options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
 
     try:
@@ -74,7 +75,7 @@ def book_event(link, username, password):
 
 # If you want to test locally, you can do something like:
 if __name__ == "__main__":
-    test_link = "https://www.wodboard.com/events/3083038"  # example
+    test_link = "https://www.wodboard.com/events/3353679"  # example
 
     success = book_event(test_link, USERNAME, PASSWORD)
     if success:
